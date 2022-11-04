@@ -33,10 +33,11 @@ ListNode* detectCycle(ListNode* head) {
 }
 
 // Create Linked list given a vector of int values
-// returns pointer to head of lined list
+// pos is used to denote the index of the node that tail's next pointer is connected to (0-indexed).
+// returns pointer to head of linked list
 ListNode* createLinkedList(vector<int> values, int pos) {
   int count = 0;
-  ListNode *head, *tailNext;
+  ListNode *head, *tailNext, *temp;
   ListNode* node = new ListNode(0);
   head = node;
   for (int value : values) {
@@ -48,12 +49,18 @@ ListNode* createLinkedList(vector<int> values, int pos) {
     }
     count++;
   }
-  node->next = tailNext;
 
-  cout << "tail value: " << node->val << endl;
-  cout << "tail next: " << node->next->val << endl;
-
+  temp = head;
   head = head->next;
+  delete (temp);
+
+  if (pos > 0) {
+    // make tail node's next point to a node having index pos
+    node->next = tailNext;
+  } else if (pos == 0) {
+    node->next = head;
+  }
+
   return head;
 }
 
