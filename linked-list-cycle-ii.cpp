@@ -24,7 +24,8 @@ int main(int argc, char const* argv[]) {
   ListNode* list3 = createLinkedList(v3, -1);
 
   ListNode* cycleNode = detectCycle(list3);
-  cout << "cycle node: " << cycleNode->val << endl;
+  if (cycleNode)
+    cout << "cycle node: " << cycleNode->val << endl;
 
   // printLinkedList(list1);
   // printLinkedList(list2);
@@ -38,8 +39,12 @@ ListNode* detectCycle(ListNode* head) {
   bool hasCycle = false;
   int count = 0;
 
+  if ((head == nullptr) || (head->next == nullptr)) {
+    return nullptr;
+  }
+
   for (int i = 0; node != nullptr; i++, node = node->next) {
-    cout << node->val << "->";
+    // cout << node->val << "->";
     nodeNext = node->next;
     node = head;
 
@@ -49,14 +54,6 @@ ListNode* detectCycle(ListNode* head) {
       }
       node = node->next;
     }
-    // node = node->next;
-    if (i >= 4) {
-      exit(0);
-    }
-  }
-
-  if (node == nullptr) {
-    cout << "\nNo cycles found\n";
   }
   return node;
 }
